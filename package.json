@@ -3,13 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "cd mood2moovie && next dev --turbopack -p 9002",
-    "genkit:dev": "cd mood2moovie && genkit start -- tsx src/ai/dev.ts",
-    "genkit:watch": "cd mood2moovie && genkit start -- tsx --watch src/ai/dev.ts",
-    "build": "cd mood2moovie && next build",
-    "start": "cd mood2moovie && next start",
-    "lint": "cd mood2moovie && next lint",
-    "typecheck": "cd mood2moovie && tsc --noEmit"
+    "dev": "next dev --turbopack -p 9002",
+    "genkit:dev": "genkit start -- tsx src/ai/dev.ts",
+    "genkit:watch": "genkit start -- tsx --watch src/ai/dev.ts",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@genkit-ai/googleai": "^1.14.1",
