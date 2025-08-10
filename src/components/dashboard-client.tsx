@@ -8,7 +8,6 @@ import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
-import { Skeleton } from './ui/skeleton';
 
 const moodOptions: MoodOption[] = [
   { mood: 'Happy', emoji: '😊', value: 5 },
@@ -45,7 +44,7 @@ export function DashboardClient() {
       } else {
         toast({
           variant: 'destructive',
-          title: 'Error',
+          title: 'Waduh, error!',
           description: result.error,
         });
       }
@@ -56,8 +55,8 @@ export function DashboardClient() {
     <div className="flex flex-col gap-6">
       <Card className="w-full">
         <CardHeader>
-          <CardTitle className="font-headline">How about a movie night?</CardTitle>
-          <CardDescription>Select your current mood and get a movie recommendation from our AI.</CardDescription>
+          <CardTitle className="font-headline">Lagi pengen nonton apa, nih?</CardTitle>
+          <CardDescription>Pilih mood lo sekarang, biar AI kita yang kasih rekomendasi film.</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="flex flex-col gap-4">
@@ -92,7 +91,7 @@ export function DashboardClient() {
                 <CardContent className="p-4">
                   <div className="flex items-center justify-center gap-3 p-8">
                     <Loader2 className="h-6 w-6 animate-spin text-primary" />
-                    <p className="text-muted-foreground">Our AI is picking the perfect movie for you...</p>
+                    <p className="text-muted-foreground">Sabar ya, AI lagi nyari film yang pas buat lo...</p>
                   </div>
                 </CardContent>
               </Card>
@@ -104,7 +103,7 @@ export function DashboardClient() {
                   <Clapperboard className="h-8 w-8 text-primary mt-1" />
                   <div>
                     <CardTitle className="font-headline">{recommendation.title}</CardTitle>
-                    <CardDescription>Perfect for when you're feeling {selectedMood?.mood.toLowerCase()}.</CardDescription>
+                    <CardDescription>Cocok banget nih buat yang lagi ngerasa {selectedMood?.mood.toLowerCase()}.</CardDescription>
                   </div>
                 </CardHeader>
                 <CardContent>
@@ -118,16 +117,15 @@ export function DashboardClient() {
       
        <Card>
         <CardHeader>
-          <CardTitle className="font-headline">How it Works</CardTitle>
-          <CardDescription>Powered by Google's Gemini AI</CardDescription>
+          <CardTitle className="font-headline">Gimana Cara Kerjanya?</CardTitle>
+          <CardDescription>Didukung oleh AI canggih dari Google, Gemini.</CardDescription>
         </CardHeader>
         <CardContent className="space-y-2 text-sm text-muted-foreground">
           <p>
-            This movie recommender uses a Genkit AI flow connected to the Gemini family of models. 
-            When you click a mood, your selection is sent to a prompt that is engineered to return a movie suggestion tailored to that feeling.
+            Jadi gini, pas lo klik mood, pilihan lo dikirim ke AI. AI-nya udah di-briefing buat ngasih saran film yang pas sama perasaan lo.
           </p>
           <p>
-            The response is structured to provide a title and a brief reason, which is then displayed back to you in the UI.
+            Nanti AI-nya ngasih judul sama alesan singkat, terus kita tampilin deh di layar lo. Keren, kan?
           </p>
         </CardContent>
       </Card>
