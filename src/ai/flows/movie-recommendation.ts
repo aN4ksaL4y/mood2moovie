@@ -24,7 +24,7 @@ const MovieRecommendationOutputSchema = z.object({
     title: z.string().describe("The title of the recommended movie."),
     imdbId: z.string().describe("The IMDB ID of the recommended movie (e.g., 'tt0111161')."),
     reason: z.string().describe("A short, casual, and friendly reason in Indonesian why this movie is recommended for the mood."),
-    trailerUrl: z.string().url().describe("The YouTube URL for the movie's trailer."),
+    trailerUrl: z.string().describe("The YouTube URL for the movie's trailer."),
 });
 export type MovieRecommendationOutput = z.infer<typeof MovieRecommendationOutputSchema>;
 
@@ -52,6 +52,9 @@ const movieRecommendationFlow = ai.defineFlow(
   },
   async input => {
     const {output} = await prompt(input);
-    return output!;
+    if (!output || !output.imdbId || !output.reason || !output.title || !output.trailerUrl) {
+      throw new Error('Incomplete recommendation from AI');
+    }
+    return output;
   }
 );
