@@ -40,12 +40,12 @@ export async function getJournalingPromptAction(
 
 export async function getMovieRecommendationAction(
   mood: Mood
-): Promise<{ title: string; reason: string } | { error: string }> {
+): Promise<{ title: string; reason: string; imdbId: string; } | { error: string }> {
   try {
     const result = await generateMovieRecommendation({ mood });
 
-    if (result.title && result.reason) {
-      return { title: result.title, reason: result.reason };
+    if (result.title && result.reason && result.imdbId) {
+      return { title: result.title, reason: result.reason, imdbId: result.imdbId };
     } else {
       return { error: 'Could not generate a recommendation. Please try again.' };
     }

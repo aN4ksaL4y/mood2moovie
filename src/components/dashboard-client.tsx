@@ -8,6 +8,7 @@ import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
+import Link from 'next/link';
 
 const moodOptions: MoodOption[] = [
   { mood: 'Happy', emoji: '😊', value: 5 },
@@ -26,6 +27,7 @@ const moodOptions: MoodOption[] = [
 interface MovieRecommendation {
   title: string;
   reason: string;
+  imdbId: string;
 }
 
 export function DashboardClient() {
@@ -40,7 +42,7 @@ export function DashboardClient() {
     startTransition(async () => {
       const result = await getMovieRecommendationAction(mood.mood);
       if ('title' in result) {
-        setRecommendation(result);
+        setRecommendation(result as MovieRecommendation);
       } else {
         toast({
           variant: 'destructive',
@@ -101,8 +103,15 @@ export function DashboardClient() {
               <Card className="bg-muted/50 animate-in fade-in-50">
                 <CardHeader className="flex-row items-start gap-4 space-y-0 pb-2">
                   <Clapperboard className="h-8 w-8 text-primary mt-1" />
-                  <div>
-                    <CardTitle className="font-headline">{recommendation.title}</CardTitle>
+                  <div className="flex-1">
+                    <div className="flex justify-between items-center">
+                       <CardTitle className="font-headline">{recommendation.title}</CardTitle>
+                       <Button asChild size="sm">
+                          <Link href={`https://www.imdb.com/title/${recommendation.imdbId}`} target="_blank" rel="noopener noreferrer">
+                            View on IMDB
+                          </Link>
+                        </Button>
+                    </div>
                     <CardDescription>Cocok banget nih buat yang lagi ngerasa {selectedMood?.mood.toLowerCase()}.</CardDescription>
                   </div>
                 </CardHeader>
