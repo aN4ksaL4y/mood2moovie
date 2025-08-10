@@ -13,7 +13,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
           className="flex items-center gap-2 font-semibold"
         >
           <BotMessageSquare className="h-6 w-6 text-primary" />
-          <span className="font-headline text-lg">ReflectFlow</span>
+          <span className="font-headline text-lg">Mood2Movie</span>
         </Link>
       </header>
       <main className="flex-1 overflow-y-auto p-4 lg:p-6">{children}</main>

@@ -4,8 +4,8 @@ import { AppLayout } from '@/components/app-layout';
 import { Toaster } from "@/components/ui/toaster"
 
 export const metadata: Metadata = {
-  title: 'ReflectFlow',
-  description: 'A reflective mood tracking app to help users understand their emotional patterns.',
+  title: 'Mood2Movie',
+  description: 'An AI-powered app that recommends movies based on your mood.',
 };
 
 export default function RootLayout({
