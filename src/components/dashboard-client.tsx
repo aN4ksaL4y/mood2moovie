@@ -16,9 +16,15 @@ import { Skeleton } from './ui/skeleton';
 const moodOptions: MoodOption[] = [
   { mood: 'Happy', emoji: '😊', value: 5 },
   { mood: 'Excited', emoji: '🤩', value: 5 },
+  { mood: 'Proud', emoji: '🥳', value: 5 },
+  { mood: 'Grateful', emoji: '🙏', value: 4 },
   { mood: 'Calm', emoji: '😌', value: 4 },
+  { mood: 'Content', emoji: '🙂', value: 4 },
   { mood: 'Sad', emoji: '😢', value: 2 },
+  { mood: 'Tired', emoji: '😴', value: 2 },
   { mood: 'Anxious', emoji: '😟', value: 1 },
+  { mood: 'Angry', emoji: '😠', value: 1 },
+  { mood: 'Stressed', emoji: '😫', value: 1 },
 ];
 
 export function DashboardClient() {
@@ -79,7 +85,7 @@ export function DashboardClient() {
             </div>
           ) : (
             <div className="flex flex-col gap-4">
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
                 {moodOptions.map((option) => (
                   <Button
                     key={option.mood}

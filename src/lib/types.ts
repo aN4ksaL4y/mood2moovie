@@ -1,4 +1,15 @@
-export type Mood = 'Happy' | 'Excited' | 'Calm' | 'Sad' | 'Anxious';
+export type Mood =
+  | 'Happy'
+  | 'Excited'
+  | 'Calm'
+  | 'Sad'
+  | 'Anxious'
+  | 'Proud'
+  | 'Grateful'
+  | 'Tired'
+  | 'Angry'
+  | 'Stressed'
+  | 'Content';
 
 export interface MoodOption {
   mood: Mood;
