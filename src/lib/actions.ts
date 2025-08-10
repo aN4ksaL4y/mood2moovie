@@ -1,7 +1,8 @@
 'use server';
 
 import { generateJournalingPrompt } from '@/ai/flows/journal-prompt';
-import type { MoodEntry } from './types';
+import { generateMovieRecommendation } from '@/ai/flows/movie-recommendation';
+import type { Mood, MoodEntry } from './types';
 
 export async function getJournalingPromptAction(
   moodHistory: MoodEntry[]
@@ -34,5 +35,22 @@ export async function getJournalingPromptAction(
   } catch (error) {
     console.error(error);
     return { error: 'An unexpected error occurred while generating the prompt.' };
+  }
+}
+
+export async function getMovieRecommendationAction(
+  mood: Mood
+): Promise<{ title: string; reason: string } | { error: string }> {
+  try {
+    const result = await generateMovieRecommendation({ mood });
+
+    if (result.title && result.reason) {
+      return { title: result.title, reason: result.reason };
+    } else {
+      return { error: 'Could not generate a recommendation. Please try again.' };
+    }
+  } catch (error) {
+    console.error(error);
+    return { error: 'An unexpected error occurred while generating the recommendation.' };
   }
 }
