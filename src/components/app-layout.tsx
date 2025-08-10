@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import Link from 'next/link';
-import { BotMessageSquare } from 'lucide-react';
+import { Film } from 'lucide-react';
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -12,7 +12,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
           href="/"
           className="flex items-center gap-2 font-semibold"
         >
-          <BotMessageSquare className="h-6 w-6 text-primary" />
+          <Film className="h-6 w-6 text-primary" />
           <span className="font-headline text-lg">Mood2Movie</span>
         </Link>
       </header>

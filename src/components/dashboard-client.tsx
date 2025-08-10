@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useTransition } from 'react';
-import { Loader2, Clapperboard, Sparkles } from 'lucide-react';
+import { Loader2, Clapperboard, Youtube } from 'lucide-react';
 import type { MoodOption } from '@/lib/types';
 import { getMovieRecommendationAction } from '@/lib/actions';
 import { cn } from '@/lib/utils';
@@ -21,13 +21,14 @@ const moodOptions: MoodOption[] = [
   { mood: 'Tired', emoji: '😴', value: 2 },
   { mood: 'Anxious', emoji: '😟', value: 1 },
   { mood: 'Angry', emoji: '😠', value: 1 },
-  { mood: 'Stressed', emoji: '😫', value: 1 },
+  { mood: 'Stressed', 'emoji': '😫', value: 1 },
 ];
 
 interface MovieRecommendation {
   title: string;
   reason: string;
   imdbId: string;
+  trailerUrl: string;
 }
 
 export function DashboardClient() {
@@ -104,15 +105,25 @@ export function DashboardClient() {
                 <CardHeader className="flex-row items-start gap-4 space-y-0 pb-2">
                   <Clapperboard className="h-8 w-8 text-primary mt-1" />
                   <div className="flex-1">
-                    <div className="flex justify-between items-center">
-                       <CardTitle className="font-headline">{recommendation.title}</CardTitle>
-                       <Button asChild size="sm">
-                          <Link href={`https://www.imdb.com/title/${recommendation.imdbId}`} target="_blank" rel="noopener noreferrer">
-                            View on IMDB
-                          </Link>
-                        </Button>
+                    <div className="flex justify-between items-start">
+                       <div className="flex-1">
+                         <CardTitle className="font-headline">{recommendation.title}</CardTitle>
+                         <CardDescription>Cocok banget nih buat yang lagi ngerasa {selectedMood?.mood.toLowerCase()}.</CardDescription>
+                       </div>
+                       <div className="flex items-center gap-2">
+                         <Button asChild size="sm" variant="secondary">
+                            <Link href={recommendation.trailerUrl} target="_blank" rel="noopener noreferrer">
+                              <Youtube className="mr-2 h-4 w-4" />
+                              Trailer
+                            </Link>
+                          </Button>
+                          <Button asChild size="sm">
+                            <Link href={`https://www.imdb.com/title/${recommendation.imdbId}`} target="_blank" rel="noopener noreferrer">
+                              IMDB
+                            </Link>
+                          </Button>
+                        </div>
                     </div>
-                    <CardDescription>Cocok banget nih buat yang lagi ngerasa {selectedMood?.mood.toLowerCase()}.</CardDescription>
                   </div>
                 </CardHeader>
                 <CardContent>

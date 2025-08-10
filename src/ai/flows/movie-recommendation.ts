@@ -24,6 +24,7 @@ const MovieRecommendationOutputSchema = z.object({
     title: z.string().describe("The title of the recommended movie."),
     imdbId: z.string().describe("The IMDB ID of the recommended movie (e.g., 'tt0111161')."),
     reason: z.string().describe("A short, casual, and friendly reason in Indonesian why this movie is recommended for the mood."),
+    trailerUrl: z.string().url().describe("The YouTube URL for the movie's trailer."),
 });
 export type MovieRecommendationOutput = z.infer<typeof MovieRecommendationOutputSchema>;
 
@@ -37,7 +38,7 @@ const prompt = ai.definePrompt({
   name: 'movieRecommendationPrompt',
   input: {schema: MovieRecommendationInputSchema},
   output: {schema: MovieRecommendationOutputSchema},
-  prompt: `You are a movie expert. Based on the user's mood, recommend a single Hollywood movie that would be a good fit. Provide the movie title, its IMDB ID, and a short, compelling, and casual reason in Indonesian.
+  prompt: `You are a movie expert. Based on the user's mood, recommend a single Hollywood movie that would be a good fit. Provide the movie title, its IMDB ID, a short, compelling, and casual reason in Indonesian, and a valid YouTube URL for its official trailer.
 
 Mood: {{{mood}}}
 `,
