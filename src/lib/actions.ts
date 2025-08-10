@@ -44,13 +44,15 @@ export async function getMovieRecommendationAction(
   try {
     const result = await generateMovieRecommendation({ mood });
 
-    if (result.title && result.reason && result.imdbId && result.trailerUrl) {
-      return { title: result.title, reason: result.reason, imdbId: result.imdbId, trailerUrl: result.trailerUrl };
+    if (result && result.title && result.reason && result.imdbId && result.trailerUrl) {
+      return result;
     } else {
-      return { error: 'Could not generate a recommendation. Please try again.' };
+      console.error('Incomplete recommendation from AI:', result);
+      return { error: 'Could not generate a complete recommendation. Please try again.' };
     }
   } catch (error) {
     console.error(error);
-    return { error: 'An unexpected error occurred while generating the recommendation.' };
+    const errorMessage = (error instanceof Error) ? error.message : 'An unknown error occurred.';
+    return { error: `An unexpected error occurred while generating the recommendation: ${errorMessage}` };
   }
 }
