@@ -38,9 +38,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
                 <span className="font-headline text-lg">ReflectFlow</span>
               </div>
               <div className="md:hidden">
-                <SidebarTrigger asChild>
-                  <Button variant="outline" size="icon" />
-                </SidebarTrigger>
+                <SidebarTrigger variant="outline" size="icon" />
               </div>
             </header>
             <main className="flex-1 overflow-y-auto p-4 lg:p-6">{children}</main>
