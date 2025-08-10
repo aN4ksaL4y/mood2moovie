@@ -1,0 +1,137 @@
+'use client';
+
+import { useState, useTransition } from 'react';
+import { Loader2, Clapperboard, Sparkles } from 'lucide-react';
+import type { MoodOption } from '@/lib/types';
+import { getMovieRecommendationAction } from '@/lib/actions';
+import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { useToast } from '@/hooks/use-toast';
+import { Skeleton } from './ui/skeleton';
+
+const moodOptions: MoodOption[] = [
+  { mood: 'Happy', emoji: '😊', value: 5 },
+  { mood: 'Excited', emoji: '🤩', value: 5 },
+  { mood: 'Proud', emoji: '🥳', value: 5 },
+  { mood: 'Grateful', emoji: '🙏', value: 4 },
+  { mood: 'Calm', emoji: '😌', value: 4 },
+  { mood: 'Content', emoji: '🙂', value: 4 },
+  { mood: 'Sad', emoji: '😢', value: 2 },
+  { mood: 'Tired', emoji: '😴', value: 2 },
+  { mood: 'Anxious', emoji: '😟', value: 1 },
+  { mood: 'Angry', emoji: '😠', value: 1 },
+  { mood: 'Stressed', emoji: '😫', value: 1 },
+];
+
+interface MovieRecommendation {
+  title: string;
+  reason: string;
+}
+
+export function DashboardClient() {
+  const [selectedMood, setSelectedMood] = useState<MoodOption | null>(null);
+  const [recommendation, setRecommendation] = useState<MovieRecommendation | null>(null);
+  const [isPending, startTransition] = useTransition();
+  const { toast } = useToast();
+
+  const handleGetRecommendation = (mood: MoodOption) => {
+    setSelectedMood(mood);
+    setRecommendation(null);
+    startTransition(async () => {
+      const result = await getMovieRecommendationAction(mood.mood);
+      if ('title' in result) {
+        setRecommendation(result);
+      } else {
+        toast({
+          variant: 'destructive',
+          title: 'Error',
+          description: result.error,
+        });
+      }
+    });
+  };
+
+  return (
+    <div className="flex flex-col gap-6">
+      <Card className="w-full">
+        <CardHeader>
+          <CardTitle className="font-headline">How about a movie night?</CardTitle>
+          <CardDescription>Select your current mood and get a movie recommendation from our AI.</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="flex flex-col gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+              {moodOptions.map((option) => (
+                <Button
+                  key={option.mood}
+                  variant="outline"
+                  className={cn(
+                    'flex flex-col h-24 gap-2 text-lg rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-lg',
+                    selectedMood?.mood === option.mood && !isPending
+                      ? 'bg-primary/20 border-primary ring-2 ring-primary'
+                      : ''
+                  )}
+                  onClick={() => handleGetRecommendation(option)}
+                  disabled={isPending && selectedMood?.mood === option.mood}
+                >
+                  {isPending && selectedMood?.mood === option.mood ? (
+                    <Loader2 className="h-8 w-8 animate-spin" />
+                  ) : (
+                    <>
+                      <span className="text-4xl">{option.emoji}</span>
+                      <span>{option.mood}</span>
+                    </>
+                  )}
+                </Button>
+              ))}
+            </div>
+
+            {isPending && (
+              <Card className="bg-background/50 animate-in fade-in-50">
+                <CardContent className="p-4">
+                  <div className="flex items-center justify-center gap-3 p-8">
+                    <Loader2 className="h-6 w-6 animate-spin text-primary" />
+                    <p className="text-muted-foreground">Our AI is picking the perfect movie for you...</p>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+            {recommendation && !isPending && (
+              <Card className="bg-muted/50 animate-in fade-in-50">
+                <CardHeader className="flex-row items-start gap-4 space-y-0 pb-2">
+                  <Clapperboard className="h-8 w-8 text-primary mt-1" />
+                  <div>
+                    <CardTitle className="font-headline">{recommendation.title}</CardTitle>
+                    <CardDescription>Perfect for when you're feeling {selectedMood?.mood.toLowerCase()}.</CardDescription>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <p className="pl-12">{recommendation.reason}</p>
+                </CardContent>
+              </Card>
+            )}
+          </div>
+        </CardContent>
+      </Card>
+      
+       <Card>
+        <CardHeader>
+          <CardTitle className="font-headline">How it Works</CardTitle>
+          <CardDescription>Powered by Google's Gemini AI</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-2 text-sm text-muted-foreground">
+          <p>
+            This movie recommender uses a Genkit AI flow connected to the Gemini family of models. 
+            When you click a mood, your selection is sent to a prompt that is engineered to return a movie suggestion tailored to that feeling.
+          </p>
+          <p>
+            The response is structured to provide a title and a brief reason, which is then displayed back to you in the UI.
+          </p>
+        </CardContent>
+      </Card>
+
+    </div>
+  );
+}
