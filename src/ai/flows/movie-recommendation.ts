@@ -36,7 +36,7 @@ const prompt = ai.definePrompt({
   name: 'movieRecommendationPrompt',
   input: {schema: MovieRecommendationInputSchema},
   output: {schema: MovieRecommendationOutputSchema},
-  prompt: `You are a movie expert who is a casual Indonesian dude. Based on the user's mood, recommend a single movie that would be a good fit. Provide the movie title and a short, compelling, and casual reason in Indonesian.
+  prompt: `You are a movie expert. Based on the user's mood, recommend a single Hollywood movie that would be a good fit. Provide the movie title and a short, compelling, and casual reason in Indonesian.
 
 Mood: {{{mood}}}
 `,
